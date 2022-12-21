@@ -24,9 +24,10 @@
 
     <header class="hero">
       <img class="hero-img" src="images/hero.svg" />
-      <h1 class="hero-heading">
-        adarsh balika the <span class="heading-inverted"> web developer</span>
+      <h1 class="hero-heading">Hi, I'm Sabiha
+        <p><span id="dynamic-text"></span></p>
       </h1>
+        
     </header>
 
     <section class="section ow">
@@ -74,5 +75,49 @@
         </li>
       </ul>
     </footer>
+    <script>
+      const dynamicContent = document.getElementById("dynamic-text");
+      console.log(dynamicContent)
+      const phrases = ["I am a frontend developer", "Learning Javascript"]
+      let phraseIndex = 0;
+      let letterIndex = 0;
+      const typingSpeed = 100;
+      const erasingSpeed = 50;
+
+      function printLetters(phrase) {
+
+          if (letterIndex == phrase.length) {
+              // clear letter which have been typed
+              clearLetters();
+          }
+          else if (letterIndex < phrase.length) {
+              dynamicContent.textContent += phrase.charAt(letterIndex);
+              letterIndex += 1;
+              setTimeout(function () {
+                  printLetters(phrase)
+              }, typingSpeed)
+          }
+      }
+
+      function clearLetters() {
+          if (letterIndex == -1) {
+              phraseIndex = (phraseIndex + 1) % phrases.length;
+              letterIndex = 0;
+              printLetters(phrases[phraseIndex])
+          }
+          else if (letterIndex > -1) {
+              let updatedPhrase = "";
+              for (let index = 0; index < letterIndex; index++) {
+                  updatedPhrase += phrases[phraseIndex].charAt(index);
+
+              }
+              console.log(updatedPhrase);
+              dynamicContent.textContent = updatedPhrase;
+              letterIndex -= 1;
+              setTimeout(clearLetters, erasingSpeed)
+          }
+      }
+      printLetters(phrases[phraseIndex])
+    </script>
   </body>
 </html>
